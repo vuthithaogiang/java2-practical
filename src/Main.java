@@ -38,7 +38,7 @@ public class Main {
                         else{
                            if(customerHashMap.size() > 0) {
                                if(checkKeyExist(customerHashMap, customer.getName())
-                                       && checkKeyExist(customerHashMap, customer.getPhone())){
+                                       && checkValueExist(customerHashMap, customer.getPhone())){
                                    System.out.println("This name and phone is existed!");
                                }
                                else{
@@ -53,19 +53,8 @@ public class Main {
                     }
                     break;
                 }
+
                 case 2:
-                {
-                    if(customerHashMap.size() > 0) {
-                        System.out.println("===== CRM =====");
-                        System.out.println("Name ----------------------------Phone");
-                        showAll(customerHashMap);
-                    }
-                    else{
-                        System.out.println("Please add customer first!");
-                    }
-                    break;
-                }
-                case 3:
                     if(customerHashMap.size() > 0) {
                         System.out.println("Enter your name that you want to search: ");
                         var nameSearch = input.nextLine();
@@ -87,6 +76,18 @@ public class Main {
                         System.out.println("Please add customer first!");
                     }
                     break;
+                case 3:
+                {
+                    if(customerHashMap.size() > 0) {
+                        System.out.println("===== CRM =====");
+                        System.out.println("Name ----------------------------Phone");
+                        showAll(customerHashMap);
+                    }
+                    else{
+                        System.out.println("Please add customer first!");
+                    }
+                    break;
+                }
 
                 default:
                     System.out.println("Invalid option. Please choice again!");
@@ -108,18 +109,16 @@ public class Main {
     }
 
     private  static  boolean checkKeyExist(HashMap<String, String> map, String key) {
-        for(String k : map.keySet()){
-            if(k.compareTo(key) == 0){
-                return true;
-            }
-        }
+       if(map.containsKey(key)){
+           return true;
+       }
         return false;
     }
 
     private static boolean checkValueExist(HashMap<String , String> map, String value ){
-           for(String v : map.values()){
-               if(v.compareTo(value) == 0){
-                   return true;
+           for(String key : map.keySet()){
+               if(map.get(key).compareTo(value) == 0){
+                   return  true;
                }
            }
            return false;
