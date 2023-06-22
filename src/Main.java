@@ -1,6 +1,8 @@
 import exception.InvalidEmailException;
 import exception.InvalidPhoneException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -21,6 +23,7 @@ public class Main {
             System.out.println("Please enter your choice? ");
 
             choice = input.nextInt();
+            input.nextLine();
 
             switch (choice){
                 case 0:
@@ -53,6 +56,8 @@ public class Main {
                 case 2:
                 {
                     if(customerHashMap.size() > 0) {
+                        System.out.println("===== CRM =====");
+                        System.out.println("Name ----------------------------Phone");
                         showAll(customerHashMap);
                     }
                     else{
@@ -62,7 +67,21 @@ public class Main {
                 }
                 case 3:
                     if(customerHashMap.size() > 0) {
+                        System.out.println("Enter your name that you want to search: ");
+                        var nameSearch = input.nextLine();
+                       ArrayList<String> result = findByName(customerHashMap, nameSearch );
 
+                       if(result.size() > 0){
+                           System.out.println("===> List phone's customer: " + nameSearch);
+
+                           for(var item : result){
+                               System.out.println(item);
+                           }
+                       }
+                       else{
+
+                           System.out.println("Not Found");
+                       }
                     }
                     else{
                         System.out.println("Please add customer first!");
@@ -78,6 +97,14 @@ public class Main {
         }
         while(choice != 0);
 
+    }
+
+    private static ArrayList<String> findByName(HashMap<String, String> map, String name){
+        ArrayList<String> listPhone = new ArrayList<>();
+         if(map.containsKey(name)){
+           listPhone.add(map.get(name));
+         }
+         return listPhone;
     }
 
     private  static  boolean checkKeyExist(HashMap<String, String> map, String key) {
@@ -103,7 +130,7 @@ public class Main {
     }
 
     private static Customer saveCustomer(Scanner input) throws InvalidPhoneException, InvalidEmailException{
-        input.nextLine();
+
         Customer customer;
         System.out.println("Enter your name: ");
         var name = input.nextLine();
